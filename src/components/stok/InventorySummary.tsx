@@ -1,6 +1,5 @@
 "use client";
 
-import { Boxes, Layers, Wallet, AlertTriangle, XCircle } from "lucide-react";
 import { KpiCard } from "@/components/dashboard/KpiCard";
 import { useClinicStore } from "@/lib/store";
 import { computeStockStatus } from "@/lib/stock-status";
@@ -24,11 +23,11 @@ export function InventorySummary() {
 
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-      <KpiCard label="Total Products" value={String(totalProducts)} icon={Boxes} />
-      <KpiCard label="Categories" value={String(categories)} icon={Layers} />
-      <KpiCard label="Total Stock Value" value={formatCurrency(totalStockValue)} icon={Wallet} />
-      <KpiCard label="Low Stock" value={String(lowStock)} icon={AlertTriangle} tone="warning" />
-      <KpiCard label="Out of Stock" value={String(outOfStock)} icon={XCircle} tone="destructive" />
+      <KpiCard label="Total Products" value={String(totalProducts)} />
+      <KpiCard label="Categories" value={String(categories)} />
+      <KpiCard label="Total Stock Value" value={formatCurrency(totalStockValue)} />
+      <KpiCard label="Low Stock" value={String(lowStock)} tone="warning" />
+      <KpiCard label="Out of Stock" value={String(outOfStock)} tone="destructive" />
     </div>
   );
 }
