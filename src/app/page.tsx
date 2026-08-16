@@ -33,7 +33,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-4 p-4 md:p-6">
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <KpiCard label="Total Products" value={String(products.length)} icon={Boxes} />
         <KpiCard label="Low Stock" value={String(menipisCount)} icon={AlertTriangle} tone="warning" />
         <KpiCard label="Out of Stock" value={String(habisCount)} icon={XCircle} tone="destructive" />
