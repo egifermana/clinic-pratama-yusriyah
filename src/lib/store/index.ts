@@ -37,9 +37,12 @@ export const useClinicStore = create<StoreState>()(
   )
 );
 
-if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {
+if (typeof window !== "undefined") {
   // Lets ad-hoc data fixes/imports run from the browser console, e.g.
   // window.useClinicStore.getState().addDailyEntry({ ... })
+  // No auth/backend here, so anyone with devtools access can already
+  // read/write this data straight from localStorage — this just makes
+  // that easier via the store's own actions instead of raw JSON.
   (window as unknown as { useClinicStore: typeof useClinicStore }).useClinicStore =
     useClinicStore;
 }
