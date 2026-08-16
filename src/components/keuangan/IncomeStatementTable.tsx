@@ -118,7 +118,6 @@ export function IncomeStatementTable() {
               periods={periods}
               getValue={(p) => p.netProfit}
               emphasis
-              grand
             />
 
             <SectionRow label="Patient Visit" span={periods.length + 1} />
@@ -217,10 +216,9 @@ function SubtotalRow({
   getValue,
   fmt = fmtAmount,
   emphasis,
-  grand,
-}: RowProps & { emphasis?: boolean; grand?: boolean }) {
+}: RowProps & { emphasis?: boolean }) {
   return (
-    <TableRow className={cn(emphasis && "border-t border-border font-semibold", grand && "text-base")}>
+    <TableRow className={cn(emphasis && "border-t border-border font-semibold")}>
       <TableCell className={emphasis ? "text-foreground" : "text-muted-foreground"}>{label}</TableCell>
       {periods.map((p) => {
         const v = getValue(p);
