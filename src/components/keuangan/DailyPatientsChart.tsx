@@ -1,21 +1,20 @@
 "use client";
 
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid } from "recharts";
-import { format } from "date-fns";
-import { enUS } from "date-fns/locale";
-import { useDailyEntryTrendLast7Days } from "@/lib/store/hooks";
+import { useDailyEntryTrend } from "@/lib/store/hooks";
+import type { ChartPeriod } from "@/lib/date";
 
-export function DailyPatientsChart() {
-  const data = useDailyEntryTrendLast7Days();
-  const chartData = data.map((d) => ({
-    label: format(d.date, "EEE", { locale: enUS }),
-    patients: d.patients,
-  }));
+interface DailyPatientsChartProps {
+  period: ChartPeriod;
+}
+
+export function DailyPatientsChart({ period }: DailyPatientsChartProps) {
+  const data = useDailyEntryTrend(period);
 
   return (
     <div className="h-56 w-full">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={chartData} margin={{ top: 8, right: 8, left: 8, bottom: 0 }}>
+        <BarChart data={data} margin={{ top: 8, right: 8, left: 8, bottom: 0 }}>
           <CartesianGrid vertical={false} stroke="var(--border)" />
           <XAxis
             dataKey="label"

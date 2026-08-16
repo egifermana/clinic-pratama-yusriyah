@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { useClinicStore } from "@/lib/store";
 import { computeStockStatus } from "@/lib/stock-status";
-import { dayKey, isToday, last7Days } from "@/lib/date";
+import { chartBuckets, isToday, isWithinDateRange, type ChartPeriod } from "@/lib/date";
 import type { Product } from "@/types/product";
 
 export function useHydrated(): boolean {
@@ -39,42 +39,19 @@ export function useTopProducts(limit = 5) {
   }, [transactions, limit]);
 }
 
-export function useDailyRevenueLast7Days() {
-  const transactions = useClinicStore((s) => s.transactions);
-  return useMemo(() => {
-    const days = last7Days();
-    const totals = new Map<string, number>();
-    for (const t of transactions) {
-      const key = dayKey(t.timestamp);
-      totals.set(key, (totals.get(key) ?? 0) + t.total);
-    }
-    return days.map((d) => ({
-      date: d,
-      key: dayKey(d.toISOString()),
-      total: totals.get(dayKey(d.toISOString())) ?? 0,
-    }));
-  }, [transactions]);
-}
-
-export function useDailyEntryTrendLast7Days() {
+export function useDailyEntryTrend(period: ChartPeriod) {
   const dailyEntries = useClinicStore((s) => s.dailyEntries);
   return useMemo(() => {
-    const days = last7Days();
-    const patientsByDay = new Map<string, number>();
-    const revenueByDay = new Map<string, number>();
-    for (const e of dailyEntries) {
-      const key = dayKey(e.tanggal);
-      patientsByDay.set(key, (patientsByDay.get(key) ?? 0) + e.opVisits + e.nonOpVisits);
-      revenueByDay.set(key, (revenueByDay.get(key) ?? 0) + e.opRevenue + e.nonOpRevenue);
-    }
-    return days.map((d) => {
-      const key = dayKey(d.toISOString());
-      return {
-        date: d,
-        key,
-        patients: patientsByDay.get(key) ?? 0,
-        revenue: revenueByDay.get(key) ?? 0,
-      };
+    const buckets = chartBuckets(period);
+    return buckets.map((bucket) => {
+      let patients = 0;
+      let revenue = 0;
+      for (const e of dailyEntries) {
+        if (!isWithinDateRange(e.tanggal, bucket.start, bucket.end)) continue;
+        patients += e.opVisits + e.nonOpVisits;
+        revenue += e.opRevenue + e.nonOpRevenue;
+      }
+      return { label: bucket.label, patients, revenue };
     });
-  }, [dailyEntries]);
+  }, [dailyEntries, period]);
 }

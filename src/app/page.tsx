@@ -1,16 +1,19 @@
 "use client";
 
+import { useState } from "react";
 import { Boxes, AlertTriangle, XCircle, Users, Wallet, Receipt, Truck } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { KpiCard } from "@/components/dashboard/KpiCard";
-import { RevenueChart } from "@/components/dashboard/RevenueChart";
 import { LowStockList } from "@/components/dashboard/LowStockList";
 import { TopProductsList } from "@/components/dashboard/TopProductsList";
 import { RecentTransactions } from "@/components/dashboard/RecentTransactions";
+import { ChartPeriodToggle } from "@/components/keuangan/ChartPeriodToggle";
+import { DailyPatientsChart } from "@/components/keuangan/DailyPatientsChart";
+import { DailyRevenueChart } from "@/components/keuangan/DailyRevenueChart";
 import { useClinicStore } from "@/lib/store";
 import { useLowStockProducts, useTodayTransactions } from "@/lib/store/hooks";
 import { formatCurrency } from "@/lib/currency";
-import { isToday } from "@/lib/date";
+import { isToday, CHART_PERIOD_LABELS, type ChartPeriod } from "@/lib/date";
 
 export default function Home() {
   const products = useClinicStore((s) => s.products);
@@ -18,6 +21,7 @@ export default function Home() {
   const dailyEntries = useClinicStore((s) => s.dailyEntries);
   const lowStock = useLowStockProducts();
   const todayTransactions = useTodayTransactions();
+  const [chartPeriod, setChartPeriod] = useState<ChartPeriod>("daily");
 
   const habisCount = products.filter((p) => p.jumlahStok <= 0).length;
   const menipisCount = lowStock.length - habisCount;
@@ -43,19 +47,33 @@ export default function Home() {
         <KpiCard label="Pending Orders" value={String(pendingOrders)} icon={Truck} />
       </div>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-        <Card className="lg:col-span-2">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="text-sm font-medium text-foreground">
+          Patients &amp; Revenue — {CHART_PERIOD_LABELS[chartPeriod]}
+        </p>
+        <ChartPeriodToggle period={chartPeriod} onChange={setChartPeriod} />
+      </div>
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+        <Card>
           <CardHeader>
-            <CardTitle>Revenue — Last 7 Days</CardTitle>
+            <CardTitle>Daily Patients</CardTitle>
           </CardHeader>
           <CardContent>
-            <RevenueChart />
+            <DailyPatientsChart period={chartPeriod} />
           </CardContent>
         </Card>
-        <LowStockList />
+        <Card>
+          <CardHeader>
+            <CardTitle>Daily Revenue</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <DailyRevenueChart period={chartPeriod} />
+          </CardContent>
+        </Card>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <LowStockList />
         <TopProductsList />
         <RecentTransactions />
       </div>

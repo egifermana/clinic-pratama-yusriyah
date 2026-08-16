@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { format } from "date-fns";
 import { enUS } from "date-fns/locale";
-import { Cross } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_ITEMS } from "@/lib/nav-items";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
@@ -17,13 +16,6 @@ export function TopBar() {
   return (
     <header className="shrink-0 border-b border-border bg-card print:hidden">
       <div className="mx-auto flex h-14 w-full max-w-7xl items-center gap-3 px-4 md:px-6">
-        <Link href="/" className="flex shrink-0 items-center gap-2">
-          <div className="flex size-7 items-center justify-center rounded-lg bg-foreground text-background">
-            <Cross className="size-4" />
-          </div>
-          <span className="hidden text-sm font-semibold sm:inline">Klinik Pratama Yusriyah</span>
-        </Link>
-
         <nav className="hidden flex-1 items-center gap-1 overflow-x-auto md:flex">
           {NAV_ITEMS.map((item) => {
             const isActive =
