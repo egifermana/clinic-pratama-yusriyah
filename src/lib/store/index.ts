@@ -36,3 +36,10 @@ export const useClinicStore = create<StoreState>()(
     }
   )
 );
+
+if (typeof window !== "undefined" && process.env.NODE_ENV !== "production") {
+  // Lets ad-hoc data fixes/imports run from the browser console, e.g.
+  // window.useClinicStore.getState().addDailyEntry({ ... })
+  (window as unknown as { useClinicStore: typeof useClinicStore }).useClinicStore =
+    useClinicStore;
+}
