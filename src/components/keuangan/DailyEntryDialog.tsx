@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useClinicStore } from "@/lib/store";
+import { dayKey } from "@/lib/date";
 import type { DailyEntry } from "@/types/finance";
 
 const dailyEntrySchema = z.object({
@@ -74,6 +75,7 @@ const COST_FIELDS = [
 ] as const;
 
 export function DailyEntryDialog({ open, onOpenChange, entry }: DailyEntryDialogProps) {
+  const dailyEntries = useClinicStore((s) => s.dailyEntries);
   const addDailyEntry = useClinicStore((s) => s.addDailyEntry);
   const updateDailyEntry = useClinicStore((s) => s.updateDailyEntry);
   const isEdit = Boolean(entry);
@@ -116,6 +118,13 @@ export function DailyEntryDialog({ open, onOpenChange, entry }: DailyEntryDialog
       updateDailyEntry(entry.id, payload);
       toast.success("Transaction updated successfully");
     } else {
+      const duplicate = dailyEntries.find((e) => dayKey(e.tanggal) === dayKey(payload.tanggal));
+      if (duplicate) {
+        toast.error(
+          `A transaction for ${format(new Date(payload.tanggal), "d MMM yyyy")} already exists — edit that entry instead to avoid double-counting.`
+        );
+        return;
+      }
       addDailyEntry(payload);
       toast.success("Transaction saved");
     }

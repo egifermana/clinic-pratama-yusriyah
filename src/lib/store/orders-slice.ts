@@ -7,7 +7,8 @@ import type { StoreState } from "@/lib/store/types";
 export interface OrdersSlice {
   orders: PurchaseOrder[];
   addOrder: (input: PurchaseOrderInput) => void;
-  updateOrderStatus: (id: string, status: OrderStatus) => void;
+  /** Returns the names of items whose product no longer exists, so stock couldn't be updated for them. */
+  updateOrderStatus: (id: string, status: OrderStatus) => string[];
 }
 
 export const createOrdersSlice: StateCreator<StoreState, [], [], OrdersSlice> = (
@@ -33,10 +34,16 @@ export const createOrdersSlice: StateCreator<StoreState, [], [], OrdersSlice> = 
   },
   updateOrderStatus: (id, status) => {
     const order = get().orders.find((o) => o.id === id);
-    if (!order || order.status === status) return;
+    if (!order || order.status === status) return [];
 
+    const missingItems: string[] = [];
     if (status === "diterima" && order.status !== "diterima") {
+      const existingProductIds = new Set(get().products.map((p) => p.id));
       for (const item of order.items) {
+        if (!existingProductIds.has(item.productId)) {
+          missingItems.push(item.namaProduk);
+          continue;
+        }
         get().adjustStock(item.productId, item.qty);
       }
     }
@@ -48,5 +55,7 @@ export const createOrdersSlice: StateCreator<StoreState, [], [], OrdersSlice> = 
           : o
       ),
     }));
+
+    return missingItems;
   },
 });

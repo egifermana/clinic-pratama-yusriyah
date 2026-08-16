@@ -109,6 +109,10 @@ export function ProductFormDialog({ open, onOpenChange, product }: ProductFormDi
     stripField: (typeof PRICE_TIERS)[number]["stripField"],
     value: string
   ) => {
+    // Only auto-fill for new products — for an existing product the strip
+    // price may have been deliberately set to something non-proportional,
+    // and silently overwriting it on every keystroke would destroy that.
+    if (isEdit) return;
     const isiPerBox = Number(watch("isiPerBox"));
     const boxPrice = Number(value);
     if (isiPerBox > 0 && !Number.isNaN(boxPrice)) {

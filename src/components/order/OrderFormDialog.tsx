@@ -75,8 +75,14 @@ export function OrderFormDialog({ open, onOpenChange }: OrderFormDialogProps) {
     setItems((prev) => {
       const existing = prev.find((i) => i.productId === product.id);
       if (existing) {
+        const mergedQty = existing.qty + qty;
+        // Weighted average keeps qty * hargaSatuan (and therefore totalBiaya)
+        // equal to the sum of what was actually entered across both adds.
+        const mergedHarga = Math.round(
+          (existing.qty * existing.hargaSatuan + qty * hargaSatuan) / mergedQty
+        );
         return prev.map((i) =>
-          i.productId === product.id ? { ...i, qty: i.qty + qty, hargaSatuan } : i
+          i.productId === product.id ? { ...i, qty: mergedQty, hargaSatuan: mergedHarga } : i
         );
       }
       return [...prev, { productId: product.id, namaProduk: product.nama, qty, hargaSatuan }];

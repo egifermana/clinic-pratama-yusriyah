@@ -50,8 +50,14 @@ export function OrderTable() {
   const updateOrderStatus = useClinicStore((s) => s.updateOrderStatus);
 
   const handleReceive = (id: string, namaSupplier: string) => {
-    updateOrderStatus(id, "diterima");
-    toast.success(`Order from ${namaSupplier} marked as received, stock updated`);
+    const missingItems = updateOrderStatus(id, "diterima");
+    if (missingItems.length > 0) {
+      toast.warning(
+        `Order from ${namaSupplier} marked as received, but stock wasn't updated for ${missingItems.join(", ")} — product no longer exists in Inventory`
+      );
+    } else {
+      toast.success(`Order from ${namaSupplier} marked as received, stock updated`);
+    }
   };
   const handleCancel = (id: string) => {
     updateOrderStatus(id, "dibatalkan");
