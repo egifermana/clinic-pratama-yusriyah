@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Boxes, AlertTriangle, XCircle, Users, Wallet, Receipt, Truck } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { KpiCard } from "@/components/dashboard/KpiCard";
 import { LowStockList } from "@/components/dashboard/LowStockList";
@@ -34,17 +33,13 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-4 p-4 md:p-6">
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <KpiCard label="Total Products" value={String(products.length)} icon={Boxes} />
-        <KpiCard label="Low Stock" value={String(menipisCount)} icon={AlertTriangle} tone="warning" />
-        <KpiCard label="Out of Stock" value={String(habisCount)} icon={XCircle} tone="destructive" />
-        <KpiCard label="Daily Patients" value={String(todayPatients)} icon={Users} />
-        <KpiCard
-          label="Today's Revenue"
-          value={formatCurrency(pendapatanHariIni)}
-          icon={Wallet}
-        />
-        <KpiCard label="Today's Transactions" value={String(todayTransactions.length)} icon={Receipt} />
-        <KpiCard label="Pending Orders" value={String(pendingOrders)} icon={Truck} />
+        <KpiCard label="Total Products" value={String(products.length)} />
+        <KpiCard label="Low Stock" value={String(menipisCount)} tone="warning" />
+        <KpiCard label="Out of Stock" value={String(habisCount)} tone="destructive" />
+        <KpiCard label="Daily Patients" value={String(todayPatients)} />
+        <KpiCard label="Today's Revenue" value={formatCurrency(pendapatanHariIni)} />
+        <KpiCard label="Today's Transactions" value={String(todayTransactions.length)} />
+        <KpiCard label="Pending Orders" value={String(pendingOrders)} />
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
