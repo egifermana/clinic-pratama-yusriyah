@@ -12,6 +12,8 @@ import type { ProjectsSlice } from "@/lib/store/accounting/projects-slice";
 import type { AssetTypesSlice } from "@/lib/store/accounting/asset-types-slice";
 import type { FixedAssetsSlice } from "@/lib/store/accounting/fixed-assets-slice";
 import type { GoodsSlice } from "@/lib/store/accounting/goods-slice";
+import type { JournalEntriesSlice } from "@/lib/store/accounting/journal-entries-slice";
+import type { JournalTemplatesSlice } from "@/lib/store/accounting/journal-templates-slice";
 
 export type StoreState = ProductsSlice &
   SuppliersSlice &
@@ -26,4 +28,6 @@ export type StoreState = ProductsSlice &
   ProjectsSlice &
   AssetTypesSlice &
   FixedAssetsSlice &
-  GoodsSlice;
+  GoodsSlice &
+  JournalEntriesSlice &
+  JournalTemplatesSlice;

@@ -1,4 +1,4 @@
-import { LayoutDashboard, Pill, Truck, Receipt, Wallet, Database } from "lucide-react";
+import { LayoutDashboard, Pill, Truck, Receipt, Wallet, Database, BookText } from "lucide-react";
 
 export const NAV_ITEMS = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
@@ -7,4 +7,5 @@ export const NAV_ITEMS = [
   { href: "/pos", label: "POS", icon: Receipt },
   { href: "/finance", label: "Finance", icon: Wallet },
   { href: "/master-data", label: "Master Data", icon: Database },
+  { href: "/journal", label: "Journal", icon: BookText },
 ] as const;

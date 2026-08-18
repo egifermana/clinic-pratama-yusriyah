@@ -15,6 +15,8 @@ import { createProjectsSlice } from "@/lib/store/accounting/projects-slice";
 import { createAssetTypesSlice } from "@/lib/store/accounting/asset-types-slice";
 import { createFixedAssetsSlice } from "@/lib/store/accounting/fixed-assets-slice";
 import { createGoodsSlice } from "@/lib/store/accounting/goods-slice";
+import { createJournalEntriesSlice } from "@/lib/store/accounting/journal-entries-slice";
+import { createJournalTemplatesSlice } from "@/lib/store/accounting/journal-templates-slice";
 
 export const useClinicStore = create<StoreState>()(
   persist(
@@ -33,6 +35,8 @@ export const useClinicStore = create<StoreState>()(
       ...createAssetTypesSlice(...a),
       ...createFixedAssetsSlice(...a),
       ...createGoodsSlice(...a),
+      ...createJournalEntriesSlice(...a),
+      ...createJournalTemplatesSlice(...a),
     }),
     {
       name: "klinik-yusriyah-store-v3",
@@ -53,6 +57,8 @@ export const useClinicStore = create<StoreState>()(
         assetTypes: state.assetTypes,
         fixedAssets: state.fixedAssets,
         goods: state.goods,
+        journalEntries: state.journalEntries,
+        journalTemplates: state.journalTemplates,
       }),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);
