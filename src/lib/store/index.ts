@@ -17,6 +17,11 @@ import { createFixedAssetsSlice } from "@/lib/store/accounting/fixed-assets-slic
 import { createGoodsSlice } from "@/lib/store/accounting/goods-slice";
 import { createJournalEntriesSlice } from "@/lib/store/accounting/journal-entries-slice";
 import { createJournalTemplatesSlice } from "@/lib/store/accounting/journal-templates-slice";
+import { createPurchaseInvoicesSlice } from "@/lib/store/accounting/purchase-invoices-slice";
+import { createSalesInvoicesSlice } from "@/lib/store/accounting/sales-invoices-slice";
+import { createSettlementsSlice } from "@/lib/store/accounting/settlements-slice";
+import { createStockOpnamesSlice } from "@/lib/store/accounting/stock-opnames-slice";
+import { createStockMutationsSlice } from "@/lib/store/accounting/stock-mutations-slice";
 
 export const useClinicStore = create<StoreState>()(
   persist(
@@ -37,6 +42,11 @@ export const useClinicStore = create<StoreState>()(
       ...createGoodsSlice(...a),
       ...createJournalEntriesSlice(...a),
       ...createJournalTemplatesSlice(...a),
+      ...createPurchaseInvoicesSlice(...a),
+      ...createSalesInvoicesSlice(...a),
+      ...createSettlementsSlice(...a),
+      ...createStockOpnamesSlice(...a),
+      ...createStockMutationsSlice(...a),
     }),
     {
       name: "klinik-yusriyah-store-v3",
@@ -59,6 +69,11 @@ export const useClinicStore = create<StoreState>()(
         goods: state.goods,
         journalEntries: state.journalEntries,
         journalTemplates: state.journalTemplates,
+        purchaseInvoices: state.purchaseInvoices,
+        salesInvoices: state.salesInvoices,
+        settlements: state.settlements,
+        stockOpnames: state.stockOpnames,
+        stockMutations: state.stockMutations,
       }),
       onRehydrateStorage: () => (state) => {
         state?.setHasHydrated(true);

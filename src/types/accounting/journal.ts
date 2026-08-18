@@ -8,7 +8,14 @@ export interface JournalLine {
 
 export type JournalLineInput = Omit<JournalLine, "id">;
 
-export type JournalSourceType = "manual" | "template";
+export type JournalSourceType =
+  | "manual"
+  | "template"
+  | "pembelian"
+  | "penjualan"
+  | "pelunasan"
+  | "stock-opname"
+  | "mutasi-stok";
 
 export interface JournalEntry {
   id: string;

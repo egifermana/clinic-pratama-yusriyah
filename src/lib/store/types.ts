@@ -14,6 +14,11 @@ import type { FixedAssetsSlice } from "@/lib/store/accounting/fixed-assets-slice
 import type { GoodsSlice } from "@/lib/store/accounting/goods-slice";
 import type { JournalEntriesSlice } from "@/lib/store/accounting/journal-entries-slice";
 import type { JournalTemplatesSlice } from "@/lib/store/accounting/journal-templates-slice";
+import type { PurchaseInvoicesSlice } from "@/lib/store/accounting/purchase-invoices-slice";
+import type { SalesInvoicesSlice } from "@/lib/store/accounting/sales-invoices-slice";
+import type { SettlementsSlice } from "@/lib/store/accounting/settlements-slice";
+import type { StockOpnamesSlice } from "@/lib/store/accounting/stock-opnames-slice";
+import type { StockMutationsSlice } from "@/lib/store/accounting/stock-mutations-slice";
 
 export type StoreState = ProductsSlice &
   SuppliersSlice &
@@ -30,4 +35,9 @@ export type StoreState = ProductsSlice &
   FixedAssetsSlice &
   GoodsSlice &
   JournalEntriesSlice &
-  JournalTemplatesSlice;
+  JournalTemplatesSlice &
+  PurchaseInvoicesSlice &
+  SalesInvoicesSlice &
+  SettlementsSlice &
+  StockOpnamesSlice &
+  StockMutationsSlice;
