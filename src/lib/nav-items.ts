@@ -7,6 +7,7 @@ import {
   Database,
   BookText,
   PackageSearch,
+  FileBarChart,
 } from "lucide-react";
 
 export const NAV_ITEMS = [
@@ -18,4 +19,5 @@ export const NAV_ITEMS = [
   { href: "/master-data", label: "Master Data", icon: Database },
   { href: "/journal", label: "Journal", icon: BookText },
   { href: "/persediaan", label: "Persediaan", icon: PackageSearch },
+  { href: "/laporan", label: "Laporan", icon: FileBarChart },
 ] as const;
