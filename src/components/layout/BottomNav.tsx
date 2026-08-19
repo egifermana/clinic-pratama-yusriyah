@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { NAV_ITEMS } from "@/lib/nav-items";
+import { NAV_ITEMS, isNavItemActive } from "@/lib/nav-items";
 
 export function BottomNav() {
   const pathname = usePathname();
@@ -11,7 +11,7 @@ export function BottomNav() {
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 flex items-stretch border-t border-border bg-card pb-[env(safe-area-inset-bottom)] print:hidden md:hidden">
       {NAV_ITEMS.map((item) => {
-        const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+        const isActive = isNavItemActive(pathname, item.href);
         const Icon = item.icon;
         return (
           <Link

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { NAV_ITEMS } from "@/lib/nav-items";
+import { NAV_ITEMS, isNavItemActive } from "@/lib/nav-items";
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -12,7 +12,7 @@ export function Sidebar() {
     <aside className="hidden w-56 shrink-0 flex-col border-r border-border bg-card md:flex print:hidden">
       <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-3">
         {NAV_ITEMS.map((item) => {
-          const isActive = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+          const isActive = isNavItemActive(pathname, item.href);
           const Icon = item.icon;
           return (
             <Link

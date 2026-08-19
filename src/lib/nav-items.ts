@@ -21,3 +21,7 @@ export const NAV_ITEMS = [
   { href: "/persediaan", label: "Persediaan", icon: PackageSearch },
   { href: "/laporan", label: "Laporan", icon: FileBarChart },
 ] as const;
+
+export function isNavItemActive(pathname: string, href: string) {
+  return href === "/" ? pathname === "/" : pathname.startsWith(href);
+}
